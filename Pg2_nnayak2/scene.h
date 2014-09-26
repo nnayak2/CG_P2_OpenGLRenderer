@@ -12,7 +12,7 @@
 #include "soil/SOIL.h"
 #include <GL/glut.h>
 
-extern int r_vert, r_horz, light;
+extern int light;
 class scene
 {
 	static scene *sceneinstance;

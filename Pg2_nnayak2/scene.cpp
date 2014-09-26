@@ -30,11 +30,14 @@ void scene::loadScene(char *filename)
 
 void scene::draw()
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glEnable(GL_COLOR_MATERIAL);
+	/*
 	GLuint tex_2d;
 	glEnable(GL_TEXTURE_2D);
 	tex_2d = SOIL_load_OGL_texture( "Crate.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0 );
 	glBindTexture(GL_TEXTURE_2D, tex_2d);
-
+	*/
 	glViewport(0, 0, 512, 512);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -42,8 +45,7 @@ void scene::draw()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef(r_horz, 0.0, 1.0, 0.0);
-	glRotatef(r_vert, 1.0, 0.0, 0.0);
+
 	glTranslatef(0, 0, -10);
 
 	if (light) glEnable(GL_LIGHTING);
@@ -63,19 +65,33 @@ void scene::draw()
 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tri_diffuse);
 			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tri_specular);
 
+			//Read and store individual vertices, normals and tex coords of the triangle
+			glm::vec3 v1((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
+			//glm::vec3 n1((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+			//glm::vec2 t1((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+			ind++;
+			glm::vec3 v2((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
+			//glm::vec3 n2((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+			//glm::vec2 t2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+			ind++;
+			glm::vec3 v3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
+			//glm::vec3 n3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+			//glm::vec2 t3((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+
+			//if (n3.null){}
+			glm::vec3 mNormal = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
+
 			glBegin(GL_TRIANGLES);
-			glNormal3f(0.0f, 1.0f, 0.0f);
+			glNormal3f(mNormal.x, mNormal.y, mNormal.z);
 
-			glTexCoord2f(1.0f, 0.0f);
-			glVertex3f((iter->mesh.positions)[*ind*3], (iter->mesh.positions)[*ind*3 +1], (iter->mesh.positions)[*ind*3 +2]);
-			ind++;
+			//glTexCoord2f(1.0f, 0.0f);
+			glVertex3f(v1.x,v1.y,v1.z);
 
-			glTexCoord2f(0.0f, 1.0f);
-			glVertex3f((iter->mesh.positions)[*ind*3], (iter->mesh.positions)[*ind*3 + 1], (iter->mesh.positions)[*ind*3 + 2]);
-			ind++;
+			//glTexCoord2f(0.0f, 1.0f);
+			glVertex3f(v2.x,v2.y,v2.z);
 
-			glTexCoord2f(1.0f, 1.0f);
-			glVertex3f((iter->mesh.positions)[*ind*3], (iter->mesh.positions)[*ind*3 + 1], (iter->mesh.positions)[*ind*3 + 2]);
+			//glTexCoord2f(1.0f, 1.0f);
+			glVertex3f(v3.x,v3.y,v3.z);
 
 			glEnd();
 		}

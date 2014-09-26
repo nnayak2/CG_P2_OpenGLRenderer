@@ -1,30 +1,18 @@
 #include "main.h"
 
 //Define all key press handlers here. Declaration of extern in header
-int r_vert = 0, r_horz = 0, light = 1;
+int light = 1;
 
 //Define my light source here
-GLfloat LightAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat LightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+GLfloat LightDiffuse[] = { 0.6f, 0.6f, 0.6f, 1.0f };
 GLfloat LightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat LightPosition[] = { 0.0f, 2.0f, -10.0f, 1.0f };
+GLfloat LightPosition[] = { 0.0f, 5.0f, 0.0f, 1.0f };
 
 void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'w':
-		r_vert++;
-		break;
-	case 'a':
-		r_horz++;
-		break;
-	case 's':
-		r_vert--;
-		break;
-	case 'd':
-		r_horz--;
-		break;
 	case 'l':
 		if (light) light = 0;
 		else light = 1;
@@ -48,11 +36,16 @@ void redraw()
 
 void initialiseGLUT(int argc, char **argv)
 {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+	glutInitWindowSize(512, 512);
+	glutCreateWindow("\t CSC561: Rasterization");
+
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	//glEnable(GL_DEPTH_TEST);
+	//glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	//enable light
@@ -62,11 +55,8 @@ void initialiseGLUT(int argc, char **argv)
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
 	glEnable(GL_LIGHT0);
 
-	glDisable(GL_BLEND);
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowSize(512,512);
-	glutCreateWindow("\t CSC561: Rasterization");
+	//glDisable(GL_BLEND);
+
 	glutKeyboardFunc(Keyboard);
 	glutDisplayFunc(draw);
 	glutIdleFunc(redraw);
