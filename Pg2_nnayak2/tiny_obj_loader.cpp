@@ -656,7 +656,8 @@ std::string LoadObj(
     }
 
     // group name
-    if (token[0] == 'g' && isSpace((token[1]))) {
+	if (token[0] == 'g' && isSpace((token[1]))) {
+		continue;
 
       // flush previous face group.
       shape_t shape;

@@ -2,6 +2,8 @@
 
 //Define all key press handlers here. Declaration of extern in header
 int light = 1;
+int xx = 0, yy = 0, zz = 0, rot = 0;
+float scale = 1.0f;
 
 //Define my light source here
 GLfloat LightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
@@ -17,9 +19,48 @@ void Keyboard(unsigned char key, int x, int y)
 		if (light) light = 0;
 		else light = 1;
 		break;
+
+	case 'z':
+		scale += 0.1f;
+		break;
+	case 'x':
+		scale -= 0.1f;
+		break;
+
+	case '[':
+		zz++;
+		break;
+	case ']':
+		zz--;
+		break;
+
+	case 'q':
+		rot++;
+		break;
+	case 'w':
+		rot--;
+		break;
 	}
 }
 
+void SpecialInput(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_UP:
+		yy++;
+		break;
+	case GLUT_KEY_DOWN:
+		yy--;
+		break;
+	case GLUT_KEY_LEFT:
+		xx--;
+		break;
+	case GLUT_KEY_RIGHT:
+		xx++;
+		break;
+	}
+}
 
 void draw()
 {
@@ -44,7 +85,7 @@ void initialiseGLUT(int argc, char **argv)
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
@@ -58,6 +99,7 @@ void initialiseGLUT(int argc, char **argv)
 	//glDisable(GL_BLEND);
 
 	glutKeyboardFunc(Keyboard);
+	glutSpecialFunc(SpecialInput);
 	glutDisplayFunc(draw);
 	glutIdleFunc(redraw);
 	glutMainLoop();
@@ -68,7 +110,7 @@ int main(int argc, char* argv[])
 	//This class loads the obj file, and does the intersection calculations
 	scene *scn = scene::getScene();
 
-	std::string obj = "cube2.obj";
+	std::string obj = "cube-textures.obj";
 
 	//load the obj file
 	scn->loadScene(const_cast<char*>(obj.c_str()));

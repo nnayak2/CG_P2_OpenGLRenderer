@@ -13,6 +13,9 @@
 #include <GL/glut.h>
 
 extern int light;
+extern int xx, yy, zz, rot;
+extern float scale;
+
 class scene
 {
 	static scene *sceneinstance;

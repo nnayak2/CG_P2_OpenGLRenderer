@@ -21,7 +21,7 @@ void scene::loadScene(char *filename)
 	for (std::vector<tinyobj::shape_t>::iterator iter = shapes.begin();
 		iter != shapes.end(); iter++)
 	{
-		std::string shapeName = iter->name;
+		std::string shapeName = iter->material.name;
 		std::map<std::string, tinyobj::material_t>::iterator it;
 		it = workaroundMaterialStore.find(shapeName);
 		iter->material = it->second;
@@ -31,13 +31,13 @@ void scene::loadScene(char *filename)
 void scene::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glEnable(GL_COLOR_MATERIAL);
-	/*
+	glEnable(GL_COLOR_MATERIAL);
+	
 	GLuint tex_2d;
 	glEnable(GL_TEXTURE_2D);
-	tex_2d = SOIL_load_OGL_texture( "Crate.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0 );
+	tex_2d = SOIL_load_OGL_texture("Crate.bmp", SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
 	glBindTexture(GL_TEXTURE_2D, tex_2d);
-	*/
+	
 	glViewport(0, 0, 512, 512);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -46,10 +46,22 @@ void scene::draw()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	//glScalef(2.0f, 2.0f, 2.0f);
 	glTranslatef(0, 0, -10);
 
 	if (light) glEnable(GL_LIGHTING);
 	else glDisable(GL_LIGHTING);
+
+	//Don't apply the transformations to light source
+	glPushMatrix();
+
+	glScalef(scale, scale, scale);
+
+	glTranslatef(xx, 0.0f, 0.0f);
+	glTranslatef(0.0f, yy, 0.0f);
+	glTranslatef(0.0f, 0.0f, zz);
+
+	glRotatef(rot, 1.0f, 1.0f, 1.0f);
 
 	for (std::vector<tinyobj::shape_t>::iterator iter = shapes.begin();
 		iter != shapes.end(); iter++)
@@ -67,33 +79,37 @@ void scene::draw()
 
 			//Read and store individual vertices, normals and tex coords of the triangle
 			glm::vec3 v1((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
-			//glm::vec3 n1((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-			//glm::vec2 t1((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+			glm::vec3 n1((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+			glm::vec2 t1((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
 			ind++;
 			glm::vec3 v2((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
-			//glm::vec3 n2((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-			//glm::vec2 t2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+			glm::vec3 n2((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+			glm::vec2 t2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
 			ind++;
 			glm::vec3 v3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
-			//glm::vec3 n3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-			//glm::vec2 t3((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+			glm::vec3 n3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+			glm::vec2 t3((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
 
-			//if (n3.null){}
-			glm::vec3 mNormal = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
+			//glm::vec3 mNormal = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
 
 			glBegin(GL_TRIANGLES);
-			glNormal3f(mNormal.x, mNormal.y, mNormal.z);
 
-			//glTexCoord2f(1.0f, 0.0f);
+			glNormal3f(n1.x,n1.y,n1.z);
+			glTexCoord2f(t1.x,t1.y);
 			glVertex3f(v1.x,v1.y,v1.z);
 
-			//glTexCoord2f(0.0f, 1.0f);
+			glNormal3f(n2.x,n2.y,n2.z);
+			glTexCoord2f(t2.x,t2.y);
 			glVertex3f(v2.x,v2.y,v2.z);
 
-			//glTexCoord2f(1.0f, 1.0f);
+			glNormal3f(n3.x,n3.y,n3.z);
+			glTexCoord2f(t3.x,t3.y);
 			glVertex3f(v3.x,v3.y,v3.z);
 
 			glEnd();
 		}
 	}
+
+	//Dont apply transformations to lights
+	glPopMatrix();
 }
