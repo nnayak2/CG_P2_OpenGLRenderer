@@ -17,6 +17,17 @@ extern int xx, yy, zz, rot;
 extern float scale;
 extern int activeTex;
 
+struct lightSources
+{
+   glm::vec3 pos;
+   glm::vec3 amb;
+   glm::vec3 dif;
+   glm::vec3 spec;
+   //int shininess;
+};
+
+extern std::vector<lightSources> lights;
+
 class scene
 {
 	static scene *sceneinstance;

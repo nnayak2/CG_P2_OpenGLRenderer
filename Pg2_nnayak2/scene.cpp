@@ -135,5 +135,23 @@ void scene::loadTextures()
 
 void scene::setupLights()
 {
-   
+
+   //enable light
+   glEnable(GL_LIGHTING);
+   //Base pointer for first light in GL
+   float light = GL_LIGHT0;
+   for (std::vector<lightSources>::iterator it = lights.begin(); it != lights.end(); it++)
+   {
+      GLfloat LightAmbient[] = { it->amb.x, it->amb.y, it->amb.z, 1.0f };
+      GLfloat LightDiffuse[] = { it->dif.x, it->dif.y, it->dif.z, 1.0f };
+      GLfloat LightSpecular[] = { it->spec.x, it->spec.y, it->spec.z, 1.0f };
+      GLfloat LightPosition[] = { it->pos.x, it->pos.y, it->pos.z, 1.0f };
+
+      glLightfv(light, GL_AMBIENT, LightAmbient);
+      glLightfv(light, GL_DIFFUSE, LightDiffuse);
+      glLightfv(light, GL_SPECULAR, LightSpecular);
+      glLightfv(light, GL_POSITION, LightPosition);
+      glEnable(light);
+      light++;
+   }
 }

@@ -10,21 +10,6 @@ glm::vec3 eye, look, up;
 float znear, zfar;
 int pixwidth, pixheight;
 
-//Define my light source here
-GLfloat LightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-GLfloat LightDiffuse[] = { 0.6f, 0.6f, 0.6f, 1.0f };
-GLfloat LightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat LightPosition[] = { 0.0f, 5.0f, 0.0f, 1.0f };
-
-struct lightSources
-{
-   glm::vec3 pos;
-   glm::vec3 amb;
-   glm::vec3 dif;
-   glm::vec3 spec;
-   //int shininess;
-};
-
 std::vector<lightSources> lights;
 
 void Keyboard(unsigned char key, int x, int y)
@@ -113,13 +98,6 @@ void initialiseGLUT(int argc, char **argv)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
    glEnable(GL_CULL_FACE);
    glCullFace(GL_BACK);
-
-	//enable light
-	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, LightSpecular);
-	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
-	glEnable(GL_LIGHT0);
 
 	//glDisable(GL_BLEND);
    scene *scn = scene::getScene();
@@ -222,9 +200,9 @@ int main(int argc, char* argv[])
       std::cout << "could not find lights.txt file, using defaults." << std::endl;
       //def light parameters
       lightSources temp;
-      temp.pos = glm::vec3(0, 1, 2);
-      temp.amb = glm::vec3(1, 1, 1);
-      temp.dif = glm::vec3(1, 1, 1);
+      temp.pos = glm::vec3(0, 5, 0);
+      temp.amb = glm::vec3(0.2, 0.2, 0.2);
+      temp.dif = glm::vec3(0.6, 0.6, 0.6);
       temp.spec = glm::vec3(1.0, 1.0, 1.0);
       lights.push_back(temp);
    }
