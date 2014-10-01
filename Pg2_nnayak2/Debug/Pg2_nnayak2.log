@@ -1,8 +1,64 @@
-﻿Build started 9/27/2014 3:02:46 AM.
+﻿Build started 10/1/2014 4:58:45 PM.
      1>Project "C:\Users\Nikhil\Documents\Visual Studio 2013\Projects\OpenGLRenderer\Pg2_nnayak2\Pg2_nnayak2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp scene.cpp tiny_obj_loader.cpp
+         tiny_obj_loader.cpp
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\tiny_obj_loader.cpp(343): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(304) : see declaration of 'sscanf'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\tiny_obj_loader.cpp(628): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(304) : see declaration of 'sscanf'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\tiny_obj_loader.cpp(645): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(304) : see declaration of 'sscanf'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\tiny_obj_loader.cpp(707): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(304) : see declaration of 'sscanf'
+         scene.cpp
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\scene.cpp(122): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(283) : see declaration of 'scanf'
          main.cpp
+         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt soil\SOIL.c soil\image_DXT.c soil\image_helper.c soil\stb_image_aug.c
+         stb_image_aug.c
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(177): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(251): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(303): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(1557): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(2394): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(2709): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(2995): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(3209): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(3548): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stb_image_aug.c(3644): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stbi_dds_aug_c.h(362): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stbi_dds_aug_c.h(366): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stbi_dds_aug_c.h(390): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stbi_dds_aug_c.h(427): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\stbi_dds_aug_c.h(498): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+         image_helper.c
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\image_helper.c(325): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\image_helper.c(366): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\image_helper.c(373): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\image_helper.c(415): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\image_helper.c(422): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         image_DXT.c
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\image_dxt.c(92): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+         SOIL.c
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\soil.c(1719): warning C4018: '<=' : signed/unsigned mismatch
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\soil.c(1729): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\nikhil\documents\visual studio 2013\projects\openglrenderer\pg2_nnayak2\soil\soil.c(1841): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nikhil\Documents\Visual Studio 2013\Projects\OpenGLRenderer\Debug\Pg2_nnayak2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Nikhil\Documents\Visual Studio 2013\Projects\OpenGLRenderer\Debug\Pg2_nnayak2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nikhil\Documents\Visual Studio 2013\Projects\OpenGLRenderer\Debug\Pg2_nnayak2.lib" /MACHINE:X86 Debug\main.obj
          Debug\scene.obj
@@ -16,4 +72,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.67
+Time Elapsed 00:00:02.93

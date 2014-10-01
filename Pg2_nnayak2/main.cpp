@@ -4,6 +4,7 @@
 int light = 1;
 int xx = 0, yy = 0, zz = 0, rot = 0;
 float scale = 1.0f;
+int activeTex = 0;
 
 //Define my light source here
 GLfloat LightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
@@ -40,6 +41,13 @@ void Keyboard(unsigned char key, int x, int y)
 	case 'w':
 		rot--;
 		break;
+
+   case ',':
+      (activeTex - 1 < 0) ? 0 : activeTex--;
+      break;
+   case '.':
+      (activeTex + 1 >= scene::getScene()->texNum) ? scene::getScene()->texNum - 1 : activeTex++;
+      break;
 	}
 }
 
@@ -88,6 +96,8 @@ void initialiseGLUT(int argc, char **argv)
 	glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_BACK);
 
 	//enable light
 	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
@@ -97,6 +107,8 @@ void initialiseGLUT(int argc, char **argv)
 	glEnable(GL_LIGHT0);
 
 	//glDisable(GL_BLEND);
+   scene *scn = scene::getScene();
+   scn->loadTextures();
 
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialInput);

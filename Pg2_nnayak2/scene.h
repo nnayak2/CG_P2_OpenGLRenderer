@@ -15,6 +15,7 @@
 extern int light;
 extern int xx, yy, zz, rot;
 extern float scale;
+extern int activeTex;
 
 class scene
 {
@@ -22,10 +23,13 @@ class scene
 	scene(){}
 public:
 	std::vector<tinyobj::shape_t> shapes;
+   std::vector<GLuint> textures;
+   int texNum;
 public:
 	static scene* getScene();
 	void loadScene(char *file);
 	void draw();
+   void loadTextures();
 };
 
 #endif

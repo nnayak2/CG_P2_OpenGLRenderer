@@ -33,10 +33,10 @@ void scene::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_COLOR_MATERIAL);
 	
-	GLuint tex_2d;
-	glEnable(GL_TEXTURE_2D);
-	tex_2d = SOIL_load_OGL_texture("Crate.bmp", SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
-	glBindTexture(GL_TEXTURE_2D, tex_2d);
+	//GLuint tex_2d;
+	
+	//tex_2d = SOIL_load_OGL_texture("Crate.bmp", SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
+	glBindTexture(GL_TEXTURE_2D, textures[activeTex]);
 	
 	glViewport(0, 0, 512, 512);
 	glMatrixMode(GL_PROJECTION);
@@ -112,4 +112,20 @@ void scene::draw()
 
 	//Dont apply transformations to lights
 	glPopMatrix();
+}
+
+void scene::loadTextures()
+{
+   glEnable(GL_TEXTURE_2D);
+
+   printf("How many textures do you want to load ?\n");
+   scanf("%d", &texNum);
+   for (int i = 0; i < texNum; i++)
+   {
+      std::string texName;
+      printf("Enter texture %d name: ", i + 1);
+      std::cin >> texName;
+      GLuint tex2d = SOIL_load_OGL_texture(texName.c_str(), SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
+      textures.push_back(tex2d);
+   }
 }
