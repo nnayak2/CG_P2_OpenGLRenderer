@@ -5,16 +5,22 @@ EXE files are in debug and release folders.(along with dependency glut32.dll)
 
 Initial setup:
 On the console, please enter parameters as asked.
-Obj file should be in current directory."cube2.obj" is there in all working directories for now.
-Enter 0 to stick to using cube2.obj.
+Load at least one image file. Error handling not yet done if 0 textures are present.
 
-Note: windows 8 might block the exe file from executing. Click more info -> run anyway option.
+Files:
+Have your image files in current drectory
+Have view.txt and window.txt in current directory is you want to have custom viewing setup
 
-Render:
-Ray caster works only with ray triangle intersections.
+Key Mapping:
+Light toggle -  l
+Translate X and Y - Arrow keys
+Translate Z - [ and ]
+Scale - q and w
+Toggle between textures - , and .
 
 Limitations:
-Make sure window width and height are greater than 256. I believe this is a glut bug.
+Loading obj without normals and tex coords causes program to crash.
+
 
 Credits to external sources:
 
@@ -30,7 +36,10 @@ For creating a window and rendering the pixels from my colorbuffer.
 c. GLM:
 For all vector calculations.
 
+d. SOIL
+For loading all image files.
+http://www.lonesock.net/soil.html
+
 2. Other sources:
 
-a. Ray triangle instersection: 
-http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-9-ray-triangle-intersection/ray-triangle-intersection-geometric-solution/
+-

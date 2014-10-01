@@ -30,6 +30,7 @@ public:
 	void loadScene(char *file);
 	void draw();
    void loadTextures();
+   void setupLights();
 };
 
 #endif

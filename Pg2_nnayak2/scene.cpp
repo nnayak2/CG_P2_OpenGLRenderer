@@ -33,22 +33,15 @@ void scene::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_COLOR_MATERIAL);
 	
-	//GLuint tex_2d;
-	
-	//tex_2d = SOIL_load_OGL_texture("Crate.bmp", SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
-	glBindTexture(GL_TEXTURE_2D, textures[activeTex]);
+   if (this->texNum > 0 && activeTex < this->texNum)
+	   glBindTexture(GL_TEXTURE_2D, textures[activeTex]);
 	
 	glViewport(0, 0, 512, 512);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45, (float)1, 1.0, 5000.0);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
 
-	//glScalef(2.0f, 2.0f, 2.0f);
-	glTranslatef(0, 0, -10);
-
+   //Toggle the lights
 	if (light) glEnable(GL_LIGHTING);
 	else glDisable(GL_LIGHTING);
 
@@ -77,18 +70,28 @@ void scene::draw()
 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tri_diffuse);
 			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tri_specular);
 
+         bool normalsPresent = 1, texPresent = 1;
+         if ((iter->mesh.normals).size() == 0)
+            normalsPresent = 0;
+         if ((iter->mesh.texcoords).size() == 0)
+            texPresent = 0;
+
+         glm::vec3 v1, v2, v3;
+         glm::vec3 n1, n2, n3;
+         glm::vec2 t1, t2, t3;
+
 			//Read and store individual vertices, normals and tex coords of the triangle
-			glm::vec3 v1((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
-			glm::vec3 n1((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-			glm::vec2 t1((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+			v1 = glm::vec3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
+         if (normalsPresent) n1 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+         if (texPresent) t1 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
 			ind++;
-			glm::vec3 v2((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
-			glm::vec3 n2((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-			glm::vec2 t2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+         v2 = glm::vec3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
+         if (normalsPresent) n2 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+         if (texPresent) t2 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
 			ind++;
-			glm::vec3 v3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
-			glm::vec3 n3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-			glm::vec2 t3((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+         v3 = glm::vec3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
+         if (normalsPresent) n3 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
+         if (texPresent) t3 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
 
 			//glm::vec3 mNormal = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
 
@@ -128,4 +131,9 @@ void scene::loadTextures()
       GLuint tex2d = SOIL_load_OGL_texture(texName.c_str(), SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
       textures.push_back(tex2d);
    }
+}
+
+void scene::setupLights()
+{
+   
 }

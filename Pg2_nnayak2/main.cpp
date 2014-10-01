@@ -6,11 +6,26 @@ int xx = 0, yy = 0, zz = 0, rot = 0;
 float scale = 1.0f;
 int activeTex = 0;
 
+glm::vec3 eye, look, up;
+float znear, zfar;
+int pixwidth, pixheight;
+
 //Define my light source here
 GLfloat LightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 GLfloat LightDiffuse[] = { 0.6f, 0.6f, 0.6f, 1.0f };
 GLfloat LightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 GLfloat LightPosition[] = { 0.0f, 5.0f, 0.0f, 1.0f };
+
+struct lightSources
+{
+   glm::vec3 pos;
+   glm::vec3 amb;
+   glm::vec3 dif;
+   glm::vec3 spec;
+   //int shininess;
+};
+
+std::vector<lightSources> lights;
 
 void Keyboard(unsigned char key, int x, int y)
 {
@@ -87,7 +102,7 @@ void initialiseGLUT(int argc, char **argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowSize(512, 512);
+	glutInitWindowSize(pixwidth, pixheight);
 	glutCreateWindow("\t CSC561: Rasterization");
 
 	glShadeModel(GL_SMOOTH);
@@ -109,6 +124,18 @@ void initialiseGLUT(int argc, char **argv)
 	//glDisable(GL_BLEND);
    scene *scn = scene::getScene();
    scn->loadTextures();
+   scn->setupLights();
+
+   //Initialize the model view and projection matrices
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   gluPerspective(45, (float)1, 1.0, 5000.0);
+
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
+   gluLookAt(eye.x, eye.y, eye.z, look.x, look.y, look.z, up.x, up.y, up.z);
+   //Some initial translation so cube is visible
+   glTranslatef(0, 0, 5);
 
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialInput);
@@ -119,6 +146,125 @@ void initialiseGLUT(int argc, char **argv)
 
 int main(int argc, char* argv[])
 {
+   //Read view and window text files for custom window
+   std::ifstream fileIn;
+   fileIn.open("./window.txt");
+   if (!fileIn)
+   {
+      std::cout << "Could not find window.txt file, using assignment defaults." << std::endl;
+      pixheight = 512;
+      pixwidth = 512;
+   }
+   else
+   {
+      while (!fileIn.eof())
+      {
+         char line[50];
+         fileIn.getline(line, 50);
+         if (line[0] == 'p')
+         {
+            char *token = &line[2];
+            _parseInt2(pixwidth, pixheight, token);
+         }
+      }
+   }
+
+   std::ifstream fileIn2;
+   fileIn2.open("./view.txt");
+   if (!fileIn2)
+   {
+      std::cout << "Could not find view.txt file, using assignment defaults." << std::endl;
+      eye = glm::vec3(0, 0, -2);
+      look = glm::vec3(0, 0, 1);
+      up = glm::vec3(0, 1, 0);
+      znear = 1;
+      zfar = 3;
+   }
+   else
+   {
+      while (!fileIn2.eof())
+      {
+         char line[50];
+         fileIn2.getline(line, 50);
+         if (line[0] == 'e')
+         {
+            char *token = &line[2];
+            _parseFloat3(eye.x, eye.y, eye.z, token);
+         }
+         if (line[0] == 'l')
+         {
+            char *token = &line[2];
+            _parseFloat3(look.x, look.y, look.z, token);
+         }
+         if (line[0] == 'u')
+         {
+            char *token = &line[2];
+            _parseFloat3(up.x, up.y, up.z, token);
+         }
+         if (line[0] == 'n')
+         {
+            char *token = &line[2];
+            znear = _parseInt(token);
+         }
+         if (line[0] == 'f')
+         {
+            char *token = &line[2];
+            zfar = _parseInt(token);
+         }
+      }
+   }
+
+   //Load the arbitrary lights
+   std::ifstream fileIn3;
+   fileIn3.open("./lights.txt");
+   if (!fileIn3)
+   {
+      std::cout << "could not find lights.txt file, using defaults." << std::endl;
+      //def light parameters
+      lightSources temp;
+      temp.pos = glm::vec3(0, 1, 2);
+      temp.amb = glm::vec3(1, 1, 1);
+      temp.dif = glm::vec3(1, 1, 1);
+      temp.spec = glm::vec3(1.0, 1.0, 1.0);
+      lights.push_back(temp);
+   }
+   else
+   {
+      while (!fileIn3.eof())
+      {
+         char line[50];
+         fileIn3.getline(line, 50);
+         lightSources temp;
+         if (line[0] == 'p')
+         {
+            char *token = &line[2];
+            _parseFloat3(temp.pos.x, temp.pos.y, temp.pos.z, token);
+
+            for (int i = 0; i < 4; i++)
+            {
+               fileIn3.getline(line, 50);
+               if (line[0] == 'a')
+               {
+                  char *token = &line[2];
+                  _parseFloat3(temp.amb.x, temp.amb.y, temp.amb.z, token);
+               }
+               if (line[0] == 'd')
+               {
+                  char *token = &line[2];
+                  _parseFloat3(temp.dif.x, temp.dif.y, temp.dif.z, token);
+               }
+               if (line[0] == 's')
+               {
+                  char *token = &line[2];
+                  _parseFloat3(temp.spec.x, temp.spec.y, temp.spec.z, token);
+               }
+            }
+            lights.push_back(temp);
+         }
+
+      }
+   }
+
 	//This class loads the obj file, and does the intersection calculations
 	scene *scn = scene::getScene();
 
