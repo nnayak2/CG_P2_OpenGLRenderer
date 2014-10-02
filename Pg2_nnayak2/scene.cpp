@@ -15,17 +15,14 @@ std::map<std::string, tinyobj::material_t> workaroundMaterialStore;
 
 void scene::loadScene(char *filename)
 {
-	tinyobj::LoadObj(shapes, filename, "./");
+   std::string err = tinyobj::LoadObj(shapes, materials, filename);
+
+   if (!err.empty()) 
+   {
+      std::cerr << err << std::endl;
+      exit(1);
+   }
 	
-	//all this code is because tinyobj was spoiling materials in the shapes structure, so i'm reloadig them with this hack.
-	for (std::vector<tinyobj::shape_t>::iterator iter = shapes.begin();
-		iter != shapes.end(); iter++)
-	{
-		std::string shapeName = iter->material.name;
-		std::map<std::string, tinyobj::material_t>::iterator it;
-		it = workaroundMaterialStore.find(shapeName);
-		iter->material = it->second;
-	}
 }
 
 void scene::draw()
@@ -36,7 +33,7 @@ void scene::draw()
    if (this->texNum > 0 && activeTex < this->texNum)
 	   glBindTexture(GL_TEXTURE_2D, textures[activeTex]);
 	
-	glViewport(0, 0, 512, 512);
+	//glViewport(0, 0, 512, 512);
 
 	//glMatrixMode(GL_MODELVIEW);
 	//glLoadIdentity();
@@ -62,6 +59,7 @@ void scene::draw()
 		for (std::vector<unsigned int>::iterator ind = iter->mesh.indices.begin();
 			ind != iter->mesh.indices.end(); ind++)
 		{
+         /*
 			GLfloat tri_ambient[] = { (iter->material).ambient[0], (iter->material).ambient[1], (iter->material).ambient[2], 1.0f };
 			GLfloat tri_diffuse[] = { (iter->material).diffuse[0], (iter->material).diffuse[1], (iter->material).diffuse[2], 1.0f };
 			GLfloat tri_specular[] = { (iter->material).specular[0], (iter->material).specular[1], (iter->material).specular[2], 1.0f };
@@ -69,7 +67,7 @@ void scene::draw()
 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, tri_ambient);
 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tri_diffuse);
 			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tri_specular);
-
+         */
          bool normalsPresent = 1, texPresent = 1;
          if ((iter->mesh.normals).size() == 0)
             normalsPresent = 0;
@@ -120,7 +118,7 @@ void scene::draw()
 void scene::loadTextures()
 {
    glEnable(GL_TEXTURE_2D);
-
+   std::string basepath = "./inputs/";
    printf("How many textures do you want to load ?\n");
    scanf("%d", &texNum);
    for (int i = 0; i < texNum; i++)
@@ -128,14 +126,16 @@ void scene::loadTextures()
       std::string texName;
       printf("Enter texture %d name: ", i + 1);
       std::cin >> texName;
+      texName = basepath + texName;
       GLuint tex2d = SOIL_load_OGL_texture(texName.c_str(), SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
+      if (tex2d == 0)
+         printf("Loading texture failed \n");
       textures.push_back(tex2d);
    }
 }
 
 void scene::setupLights()
 {
-
    //enable light
    glEnable(GL_LIGHTING);
    //Base pointer for first light in GL

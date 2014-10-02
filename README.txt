@@ -7,8 +7,8 @@ Initial setup:
 On the console, please enter parameters as asked. (how many textures and each texture name completely. ex: "xyz.bmp")
 
 Files:
-Have your image files in current drectory
-Have view.txt and window.txt in current directory is you want to have custom viewing setup
+OBJ and MTL files have to bein current directory. (NOTE: It wasn't getting loaded correctly from the inputs directory strangely.)
+view.txt, lights.txt, window.txt and images should be in inputs directory, and input directory should be in current working directory.
 
 Key Mapping:
 Light toggle ->              l

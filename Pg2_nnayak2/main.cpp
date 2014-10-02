@@ -72,8 +72,6 @@ void SpecialInput(int key, int x, int y)
 
 void draw()
 {
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
 	scene::getScene()->draw();
 	glutSwapBuffers();
 }
@@ -96,8 +94,8 @@ void initialiseGLUT(int argc, char **argv)
 	glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-   glEnable(GL_CULL_FACE);
-   glCullFace(GL_BACK);
+   glEnable(GL_BLEND);
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//glDisable(GL_BLEND);
    scene *scn = scene::getScene();
@@ -107,7 +105,7 @@ void initialiseGLUT(int argc, char **argv)
    //Initialize the model view and projection matrices
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   gluPerspective(45, (float)1, 1.0, 5000.0);
+   gluPerspective(45, (float)1, znear, zfar);
 
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -126,7 +124,7 @@ int main(int argc, char* argv[])
 {
    //Read view and window text files for custom window
    std::ifstream fileIn;
-   fileIn.open("./window.txt");
+   fileIn.open("./inputs/window.txt");
    if (!fileIn)
    {
       std::cout << "Could not find window.txt file, using assignment defaults." << std::endl;
@@ -148,7 +146,7 @@ int main(int argc, char* argv[])
    }
 
    std::ifstream fileIn2;
-   fileIn2.open("./view.txt");
+   fileIn2.open("./inputs/view.txt");
    if (!fileIn2)
    {
       std::cout << "Could not find view.txt file, using assignment defaults." << std::endl;
@@ -156,7 +154,7 @@ int main(int argc, char* argv[])
       look = glm::vec3(0, 0, 1);
       up = glm::vec3(0, 1, 0);
       znear = 1;
-      zfar = 3;
+      zfar = 10;
    }
    else
    {
@@ -194,7 +192,7 @@ int main(int argc, char* argv[])
 
    //Load the arbitrary lights
    std::ifstream fileIn3;
-   fileIn3.open("./lights.txt");
+   fileIn3.open("./inputs/lights.txt");
    if (!fileIn3)
    {
       std::cout << "could not find lights.txt file, using defaults." << std::endl;
@@ -245,11 +243,18 @@ int main(int argc, char* argv[])
 
 	//This class loads the obj file, and does the intersection calculations
 	scene *scn = scene::getScene();
-
-	std::string obj = "cube-textures.obj";
-
+   
+   //Get the obj file from user
+   //std::string basepath = "./inputs/";
+   std::string obj;
+   printf("Enter obj file to load or 0 for default: ");
+   std::cin >> obj;
+   if (obj == "0")
+      obj = "cube-textures.obj";
+   //obj = basepath + obj;
+   
 	//load the obj file
-	scn->loadScene(const_cast<char*>(obj.c_str()));
+   scn->loadScene(const_cast<char*>(obj.c_str()));
 
 	initialiseGLUT(argc, argv);
 }
