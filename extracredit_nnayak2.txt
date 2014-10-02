@@ -1,12 +1,12 @@
-1. Arbitrarily sized images and interface windows 
+
+1. support arbitrarily sized images (and interface windows):
 
 read window.txt file for window parameters.
 p x y
-w x y
-where p is pixel width and height, and w is world width and height of screen.
+where p is pixel width and height
 
 
-2. arbitrary viewing setups:
+2. support arbitrary viewing setups:
 
 read view.txt file for camera parameters.
 Format as follows:
@@ -18,7 +18,7 @@ f x
 where order is eye, look, up, near and far plane.
 
 
-3. multiple lights at arbitrary locations:
+3. support multiple lights at arbitrary locations:
 
 Read lights.txt file for lights. Each light should have following 5 parameters in order given below.
 p x y z
@@ -28,13 +28,8 @@ s r g b
 The values correspond to position, ambient, diffuse, specular.
 
 
-4. Multi threading: (If it can be claimed for credit)
+4. up to 15% to support multiple image formats:
 
-If the screen can be divided into 4 integral quarters, the intersection routine runs on 4 threads to render frame faster.
-
-
-Notes:
-a. world width and height and znear determine FOV.
-b. look and up have to be orthogonal to each other.
-c.if file not found,stick to assignment defaults.
-d. file parsing does not have error checking enabled, so it could result in unexpected behavior if files are not correct.
+You can load multiple images per run, and all image formats supported by SOIL lib can be added.
+BMP works, PNG works, JPG - not working correctly in all jpg images.
+I spoke with Dr Watson, and he said he could give me 10% and not 15% for this 4th point of extra credit.
