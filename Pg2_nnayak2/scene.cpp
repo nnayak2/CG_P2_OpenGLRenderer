@@ -22,7 +22,6 @@ void scene::loadScene(char *filename)
       std::cerr << err << std::endl;
       exit(1);
    }
-	
 }
 
 void scene::draw()
@@ -81,15 +80,15 @@ void scene::draw()
 			//Read and store individual vertices, normals and tex coords of the triangle
 			v1 = glm::vec3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
          if (normalsPresent) n1 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-         if (texPresent) t1 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+         if (texPresent) t1 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.texcoords)[*ind * 2 + 1]);
 			ind++;
          v2 = glm::vec3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
          if (normalsPresent) n2 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-         if (texPresent) t2 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+         if (texPresent) t2 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.texcoords)[*ind * 2 + 1]);
 			ind++;
          v3 = glm::vec3((iter->mesh.positions)[*ind * 3], (iter->mesh.positions)[*ind * 3 + 1], (iter->mesh.positions)[*ind * 3 + 2]);
          if (normalsPresent) n3 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
-         if (texPresent) t3 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.positions)[*ind * 2 + 1]);
+         if (texPresent) t3 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.texcoords)[*ind * 2 + 1]);
 
 			//glm::vec3 mNormal = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
 
