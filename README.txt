@@ -7,8 +7,12 @@ Initial setup:
 On the console, please enter parameters as asked. (how many textures and each texture name completely. ex: "xyz.bmp")
 
 Files:
-OBJ and MTL files have to bein current directory. (NOTE: It wasn't getting loaded correctly from the inputs directory strangely.)
+OBJ and MTL files have to be in current directory. (NOTE: It wasn't getting loaded correctly from the inputs directory strangely.)
 view.txt, lights.txt, window.txt and images should be in inputs directory, and input directory should be in current working directory.
+
+Sample files provided: (code was tested with these files)
+capsule.obj and capsule.bmp
+cube-textures.obj with 1.bmp and 1.png and 2.bmp
 
 Key Mapping:
 Light toggle ->              l
@@ -40,5 +44,7 @@ For loading all image files.
 http://www.lonesock.net/soil.html
 
 2. Other sources:
+
+nehe.gamedev.net - helped me clear some doubts related to initial GL setup.
 
 Code from my ray tracer project reused at some places, like file parsing, obj loading.

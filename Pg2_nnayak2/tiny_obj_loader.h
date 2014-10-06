@@ -10,6 +10,7 @@
 #include <vector>
 #include <map>
 
+
 namespace tinyobj {
 
 typedef struct

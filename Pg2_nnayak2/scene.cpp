@@ -10,9 +10,6 @@ scene* scene::getScene()
 	return sceneinstance;
 }
 
-//HACK: This variable is a workaround for bug in tiny obj loader
-std::map<std::string, tinyobj::material_t> workaroundMaterialStore;
-
 void scene::loadScene(char *filename)
 {
    std::string err = tinyobj::LoadObj(shapes, materials, filename);
@@ -27,15 +24,6 @@ void scene::loadScene(char *filename)
 void scene::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_COLOR_MATERIAL);
-	
-   if (this->texNum > 0 && activeTex < this->texNum)
-	   glBindTexture(GL_TEXTURE_2D, textures[activeTex]);
-	
-	//glViewport(0, 0, 512, 512);
-
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
 
    //Toggle the lights
 	if (light) glEnable(GL_LIGHTING);
@@ -58,19 +46,25 @@ void scene::draw()
 		for (std::vector<unsigned int>::iterator ind = iter->mesh.indices.begin();
 			ind != iter->mesh.indices.end(); ind++)
 		{
-         /*
-			GLfloat tri_ambient[] = { (iter->material).ambient[0], (iter->material).ambient[1], (iter->material).ambient[2], 1.0f };
-			GLfloat tri_diffuse[] = { (iter->material).diffuse[0], (iter->material).diffuse[1], (iter->material).diffuse[2], 1.0f };
-			GLfloat tri_specular[] = { (iter->material).specular[0], (iter->material).specular[1], (iter->material).specular[2], 1.0f };
+         if (iter->mesh.material_ids.size() > 0)
+         {
+            int index = iter->mesh.material_ids[0];
+            if (index >= 0)
+            {
+               GLfloat tri_ambient[] = { (materials[index]).ambient[0], (materials[index]).ambient[1], (materials[index]).ambient[2] };
+               GLfloat tri_diffuse[] = { (materials[index]).diffuse[0], (materials[index]).diffuse[1], (materials[index]).diffuse[2] };
+               GLfloat tri_specular[] = { (materials[index]).specular[0], (materials[index]).specular[1], (materials[index]).specular[2] };
 
-			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, tri_ambient);
-			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tri_diffuse);
-			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tri_specular);
-         */
+               glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, tri_ambient);
+               glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, tri_diffuse);
+               glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tri_specular);
+            }
+         }
+
          bool normalsPresent = 1, texPresent = 1;
          if ((iter->mesh.normals).size() == 0)
             normalsPresent = 0;
-         if ((iter->mesh.texcoords).size() == 0)
+         if ((iter->mesh.texcoords).size() == 0 || texNum <= 0)
             texPresent = 0;
 
          glm::vec3 v1, v2, v3;
@@ -125,12 +119,15 @@ void scene::loadTextures()
       std::string texName;
       printf("Enter texture %d name: ", i + 1);
       std::cin >> texName;
+      texNames.push_back(texName);
       texName = basepath + texName;
       GLuint tex2d = SOIL_load_OGL_texture(texName.c_str(), SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0);
       if (tex2d == 0)
          printf("Loading texture failed \n");
       textures.push_back(tex2d);
    }
+   if (texNum > 0)
+      glBindTexture(GL_TEXTURE_2D, textures[0]);
 }
 
 void scene::setupLights()

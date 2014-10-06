@@ -81,6 +81,12 @@ void redraw()
 	glutPostRedisplay();
 }
 
+void handle_menu(int ID)
+{
+   glBindTexture(GL_TEXTURE_2D, scene::getScene()->textures[ID]);
+}
+
+
 void initialiseGLUT(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -94,13 +100,20 @@ void initialiseGLUT(int argc, char **argv)
 	glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-   glEnable(GL_BLEND);
-   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//glDisable(GL_BLEND);
    scene *scn = scene::getScene();
    scn->loadTextures();
    scn->setupLights();
+
+   glutCreateMenu(handle_menu);	// Setup GLUT popup menu
+   int i = 0;
+   for (std::vector<std::string>::iterator it = scn->texNames.begin(); it != scn->texNames.end(); it++)
+   {
+      glutAddMenuEntry((*it).c_str(), i);
+      glBindTexture(GL_TEXTURE_2D, scn->textures[i]);
+      i++;
+   }
+   glutAttachMenu(GLUT_RIGHT_BUTTON);
 
    //Initialize the model view and projection matrices
    glMatrixMode(GL_PROJECTION);

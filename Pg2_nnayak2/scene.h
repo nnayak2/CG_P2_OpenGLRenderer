@@ -36,6 +36,7 @@ public:
 	std::vector<tinyobj::shape_t> shapes;
    std::vector<tinyobj::material_t> materials;
    std::vector<GLuint> textures;
+   std::vector<std::string> texNames;
    int texNum;
 public:
 	static scene* getScene();
