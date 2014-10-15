@@ -84,7 +84,15 @@ void scene::draw()
          if (normalsPresent) n3 = glm::vec3((iter->mesh.normals)[*ind * 3], (iter->mesh.normals)[*ind * 3 + 1], (iter->mesh.normals)[*ind * 3 + 2]);
          if (texPresent) t3 = glm::vec2((iter->mesh.texcoords)[*ind * 2], (iter->mesh.texcoords)[*ind * 2 + 1]);
 
-			//glm::vec3 mNormal = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
+         //try some default values for normals and textures since it wasn't present in obj
+			if(!normalsPresent) 
+            n1 = n2 = n3 = -glm::normalize(glm::cross((v3 - v1), (v2 - v1)));
+         if (!texPresent)
+         {
+            t1 = glm::vec2(0, 0);
+            t2 = glm::vec2(0, 1);
+            t3 = glm::vec2(1, 0);
+         }
 
 			glBegin(GL_TRIANGLES);
 

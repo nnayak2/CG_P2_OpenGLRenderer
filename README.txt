@@ -5,6 +5,7 @@ EXE files are in debug and release folders.(along with dependency glut32.dll)
 
 Initial setup:
 On the console, please enter parameters as asked. (how many textures and each texture name completely. ex: "xyz.bmp")
+Right click in the window to get a menu and pick a texture from the options
 
 Files:
 OBJ and MTL files have to be in current directory. (NOTE: It wasn't getting loaded correctly from the inputs directory strangely.)
@@ -19,7 +20,7 @@ Light toggle ->              l
 Translate X and Y ->         Arrow keys
 Translate Z ->               [ and ]
 Scale ->                     q and w
-Toggle between textures ->   , and .
+RIGHT CLICK ->				 Get the menu to select the texture 
 
 Limitations:
 Loading obj without normals and tex coords causes not so nice output and no textures.
@@ -42,6 +43,9 @@ For all vector calculations.
 d. SOIL
 For loading all image files.
 http://www.lonesock.net/soil.html
+
+e. Healey's webpage for CSC 461
+For GLUT menu code for texture selection
 
 2. Other sources:
 
